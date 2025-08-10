@@ -5,6 +5,7 @@ thanks haren
 babble eats bones
 -->
 
+<!DOCTYPE html>
 <html>
 <head>
 <meta name="theme-color" content="#113355">
@@ -13,63 +14,83 @@ babble eats bones
 <meta property="og:description" content="A site dedicated to showing our love and appreciation for Piston, MapleStory’s finest bara knight." />
 <meta property="og:url" content="https://www.ilovepiston.com" />
 <meta property="og:image" content="/piston.png" />
-<script language="javascript" type="text/javascript" src="/barascript2.js">
-</script>
-</head>
+<script language="javascript" type="text/javascript" src="/barascript.js"></script>
 <title>i love piston</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/ilovepistoncss.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" href="/favicon.ico" />
 <style>
-.bara-succ {
-	height:130px;
-	width:9%;
-	}
-#Div2 {
-  display: none;
-}
-img {
-display: block;
-margin-left: auto;
-margin-right: auto;
-}
-body {
-cursor: url('/buccsucc.cur'), auto;
-margin-top:46px;
+@media (max-width:600px){
+  .navbar-soundcloud { display:none; }
+  #mobile-toggle { font-size:22px; margin-left:auto; }
+  #mobile-menu { position:absolute; top:46px; left:0; right:0; z-index:2; padding:8px 16px; }
+  #mobile-menu a { display:block; padding:10px 0; border-bottom:1px solid #eee; text-decoration:none; color:inherit; }
 }
 </style>
-<head>
-<link rel="shortcut icon" href="/favicon.ico" />
 </head>
 <body>
-
 <div class="bara-top">
-  <div class="bara-bar bara-white bara-card">
-    <a href="/" class="bara-bar-item bara-button bara-padding-large">Home</a>
-    <a href="/nug" class="bara-bar-item bara-button bara-padding-large bara-hide-small">Nug</a>
-    <a href="/about" class="bara-bar-item bara-button bara-padding-large bara-hide-small">About</a>
-    <a href="/contact" class="bara-bar-item bara-button bara-padding-large bara-hide-small">Contact</a>
+  <div class="bara-bar bara-white bara-card bara-bar-flex">
+    <a href="/index.html" onclick="return loadPage('/index.html');" class="bara-bar-item bara-button bara-padding-large">Home</a>
+    <a href="/nug/index.html" onclick="return loadPage('/nug/index.html');" class="bara-bar-item bara-button bara-padding-large bara-hide-small">Nug</a>
+    <a href="/about/index.html" onclick="return loadPage('/about/index.html');" class="bara-bar-item bara-button bara-padding-large bara-hide-small">About</a>
+    <a href="/contact/index.html" onclick="return loadPage('/contact/index.html');" class="bara-bar-item bara-button bara-padding-large bara-hide-small">Contact</a>
+    <div class="navbar-soundcloud">
+      <iframe id="sc-player" width="240" height="20" scrolling="no" frameborder="no"
+    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/477403989&color=ff5500&inverse=false&auto_play=false&show_user=true">
+</iframe>
+
+<button id="change-song-btn" type="button" class="change-song-button" aria-pressed="false">Change Song</button>
+
+    </div>
+    <a href="javascript:void(0)" id="mobile-toggle" class="bara-bar-item bara-button bara-padding-large bara-hide-large" aria-label="Toggle navigation" onclick="toggleMobileMenu()">☰</a>
+  </div>
+  <div id="mobile-menu" class="bara-hide bara-white bara-card">
+    <a href="/nug/index.html" onclick="toggleMobileMenu(); return loadPage('/nug/index.html');" class="bara-bar-item bara-button bara-padding-large">Nug</a>
+    <a href="/about/index.html" onclick="toggleMobileMenu(); return loadPage('/about/index.html');" class="bara-bar-item bara-button bara-padding-large">About</a>
+    <a href="/contact/index.html" onclick="toggleMobileMenu(); return loadPage('/contact/index.html');" class="bara-bar-item bara-button bara-padding-large">Contact</a>
   </div>
 </div>
-
-<left>
-
-<button class="bara-button bara-light-gray bara-right bara-succ" type="button" onclick="switchVisible();">Change<br>song</button>
-
-
-<div id="Div1"><iframe width="91%" height="130" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/477403989&color=%23ff5500&auto_play=false&hide_related=false&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe></div>
-
-
-
-<div id="Div2"><iframe width="91%" height="130" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/325155296&color=%23ff5500&auto_play=false&hide_related=false&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-</iframe></div>
-
-
-
+<div id="content">
+  <div>
+    <img src="/assets/5hxNH2z.jpeg" class="full-width center-img">
+    <img src="/assets/lF3gNH3.png" class="full-width center-img">
+  </div>
 </div>
-<img src="https://i.imgur.com/5hxNH2z.jpg" style="width:100%;"></img>
-<img src="https://i.imgur.com/lF3gNH3.png" style="width:100%;"></img>
-</left>
+<script>
+function loadPage(url) {
+  fetch(url)
+    .then(response => response.text())
+    .then(html => {
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(html, "text/html");
+      var newContent = doc.getElementById("content") ? doc.getElementById("content").innerHTML : doc.body.innerHTML;
+      document.getElementById("content").innerHTML = newContent;
+      history.pushState(null, "", url);
+      var menu = document.getElementById('mobile-menu');
+      if (menu && !menu.classList.contains('bara-hide')) {
+        menu.classList.add('bara-hide');
+        menu.classList.remove('bara-show-block');
+      }
+    });
+  return false;
+}
+window.addEventListener('popstate', function(event) {
+  loadPage(location.pathname);
+});
+function toggleMobileMenu() {
+  var menu = document.getElementById('mobile-menu');
+  if (!menu) return;
+  if (menu.classList.contains('bara-hide')) {
+    menu.classList.remove('bara-hide');
+    menu.classList.add('bara-show-block');
+  } else {
+    menu.classList.add('bara-hide');
+    menu.classList.remove('bara-show-block');
+  }
+}
+</script>
 </body>
 </html>
