@@ -25,7 +25,22 @@ function setTrack(index) {
     }
 }
 
+function updateBodyTopSpacing() {
+    var topBar = document.querySelector('.bara-top');
+    if (!topBar) return;
+    var h = topBar.offsetHeight;
+    document.body.style.marginTop = h + 'px';
+    var mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenu) {
+        mobileMenu.style.top = h + 'px';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    updateBodyTopSpacing();
+    window.addEventListener('resize', updateBodyTopSpacing);
+    window.addEventListener('load', updateBodyTopSpacing);
+
     const btn = document.getElementById('change-song-btn');
     const iframe = document.getElementById('sc-player');
     if (iframe) {
@@ -51,5 +66,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     applyRandomToggle();
 });
-
+ 
 })();
